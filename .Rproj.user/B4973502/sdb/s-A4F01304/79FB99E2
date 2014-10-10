@@ -1,0 +1,17 @@
+{
+    "contents" : "\nweek1_q1 <- function() {\n  #  G <- read.table(\"q1_dataset.txt\", header = FALSE)\n  G <- rbind(c(0,1,1),c(0,0,1),c(0,0,1))\n  print(G)\n  g <- graph.adjacency(G, mode=\"directed\")\n  # g <- random.graph.game(20, 5/20, directed=TRUE)\n  result <- page.rank(g, algo=\"prpack\", damping=0.7)$vector\n  \n  #   G <- rbind(c(0,1,1),c(0,0,1),c(0,0,1))\n  #   print(G)\n  #   result <- pagerank_markpeng(G,'power', 0.7)\n  # result <- pagerank(G,'eigen', 0.7)\n  #   print(result)\n  \n  result <- 3 * result\n  \n  # ra + rb\n  print(paste('a + b = ', result[1] + result[2]))\n  # rb + rc\n  print(paste('b + c = ', result[2] + result[3]))\n  # ra + rc\n  print(paste('a + c = ', result[1] + result[3]))\n  # ra + rb + rc\n  print(paste('a + b + c = ', result[1] + result[2] + result[3]))\n  \n}\n\npagerank_markpeng <- function(G,method='eigen',d=.85,niter=100){\n  # follows the notation of the matlab article on pagerank.\n  # at http://www.mathworks.com/company/newsletters/news_notes/clevescorner/oct02_cleve.html\n  # G is a connectivity matrix, with G[i,j]=1 if page i points to page j\n  # method is either \"power\" or \"eigen\"\n  \n  # compute indegree of each node\n  cvec <- apply(G,2,sum)\n  # print(cvec)\n  cvec[cvec==0] <- 1 # nodes with indegree 0 will cause problems if we divide by 0.\n  # print(cvec)\n  \n  # compuate outdegree of each node\n  gvec <- apply(G,1,sum)\n  # print(gvec)\n  \n  n <- nrow(G)\n  #   print(n)\n  delta <- (1-d)/n\n  #   print(delta)\n  \n  A <- matrix(0,nrow(G),ncol(G))\n  \n  oldR <- cbind(1, 1, 1)\n  for (i in 1:n) \n  {\n    for (j in 1:n)\n    {\n      \n    }\n  }\n}\n\npagerank <- function(G,method='eigen',d=.85,niter=100){\n  # follows the notation of the matlab article on pagerank.\n  # at http://www.mathworks.com/company/newsletters/news_notes/clevescorner/oct02_cleve.html\n  # G is a connectivity matrix, with G[i,j]=1 if page i points to page j\n  # method is either \"power\" or \"eigen\"\n  \n  # compute indegree of each node\n  cvec <- apply(G,2,sum)\n  # print(cvec)\n  cvec[cvec==0] <- 1 # nodes with indegree 0 will cause problems if we divide by 0.\n  # print(cvec)\n  \n  # compuate outdegree of each node\n  gvec <- apply(G,1,sum)\n  # print(gvec)\n  \n  n <- nrow(G)\n  print(n)\n  delta <- (1-d)/n\n  print(delta)\n  \n  A <- matrix(delta,nrow(G),ncol(G))\n  \n  print(A)\n  for (i in 1:n) \n    A[i,] <- A[i,] + d*G[i,]/cvec\n  #  print(A)\n  \n  if (method=='power'){\n    x <- rep(1,n)\n    for (i in 1:niter) x <- A%*%x\n  } else {\n    x <- Re(eigen(A)$vector[,1])\n  }\n  x/sum(x)\n}\n\n# main()\nlibrary(\"igraph\")\nweek1_q1()\n\n",
+    "created" : 1412938483899.000,
+    "dirty" : false,
+    "encoding" : "UTF-8",
+    "folds" : "",
+    "hash" : "3168294082",
+    "id" : "79FB99E2",
+    "lastKnownWriteTime" : 1412953431,
+    "path" : "E:/GitHub/Mining-Massive-Datasets/week1/q1.R",
+    "project_path" : "week1/q1.R",
+    "properties" : {
+        "tempName" : "Untitled1"
+    },
+    "source_on_save" : true,
+    "type" : "r_source"
+}
